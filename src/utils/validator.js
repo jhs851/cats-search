@@ -10,7 +10,7 @@
     // implement code here
     const validator = {
         isNumber(a) {
-            return typeof a === 'number'
+            return typeof a === "number"
         }
     };
 
@@ -20,6 +20,6 @@
   // NOTE: Uncomment below lines, if you using es6 module.
   // export default {
   //   isNumber(a) {
-  //     return typeof a === 'number'
+  //     return typeof a === "number"
   //   }
   // }

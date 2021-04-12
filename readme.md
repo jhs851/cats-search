@@ -61,17 +61,17 @@ const request = async (url: string) => {  
         return result.json();
     } catch (e) {
         console.warn(e);
-        }
-    }   
+    }
+}   
     
-    const api = {    
-        fetchGif: keyword => {
-            return request(`${API_ENDPOINT}/api/gif/search?q=${keyword}`);
-        },
-        fetchGifAll: () => {
-            return request(`${API_ENDPOINT}/api/gif/all`);
-        }
-    };
+const api = {    
+    fetchGif: keyword => {
+        return request(`${API_ENDPOINT}/api/gif/search?q=${keyword}`);
+    },
+    fetchGifAll: () => {
+        return request(`${API_ENDPOINT}/api/gif/all`);
+    }
+};
 ```
 * SearchResult 에 각 아이템을 클릭하는 이벤트를 Event Delegation 기법을 이용해 수정해주세요.
 * 컴포넌트 내부의 함수들이나 Util 함수들을 작게 잘 나누어주세요.

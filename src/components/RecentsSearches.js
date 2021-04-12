@@ -3,18 +3,13 @@ import Component from "../core/Component.js";
 export default class RecentSearches extends Component {
     state = {
         visible: false,
-        searches: JSON.parse(localStorage.getItem('recentSearches')) || [],
+        searches: JSON.parse(localStorage.getItem("recentSearches")) || [],
     };
 
-    $recents;
-
     constructor($target, props) {
-        super($target, props);
-
-        this.$recents = Component.createElement("div", { class: "RecentSearches" });
-        this.$recents.addEventListener("click", this.onClick.bind(this));
-
-        $target.appendChild(this.$recents);
+        super($target, Component.createElement("div", { class: "RecentSearches" }), props);
+        this.$element.addEventListener("click", this.onClick.bind(this));
+        $target.appendChild(this.$element);
         this.render();
     }
 
@@ -32,7 +27,7 @@ export default class RecentSearches extends Component {
 
             return { searches };
         }, () => {
-            localStorage.setItem('recentSearches', JSON.stringify(this.state.searches));
+            localStorage.setItem("recentSearches", JSON.stringify(this.state.searches));
         });
     }
 
@@ -45,7 +40,7 @@ export default class RecentSearches extends Component {
         const reversed = searches.slice().reverse();
 
         if (visible && searches.length) {
-            this.$recents.innerHTML = `
+            this.$element.innerHTML = `
                 <div class="title">
                     <span>최근 검색어</span>
                     <button class="remove-all">전체 삭제</button>
@@ -60,8 +55,8 @@ export default class RecentSearches extends Component {
                     `).join("")}
                 </ul>
             `;
-            this.$recents.style.display = "block";
-            this.$recents.querySelectorAll(".item").forEach(($item, index) => {
+            this.$element.style.display = "block";
+            this.$element.querySelectorAll(".item").forEach(($item, index) => {
                 $item.addEventListener("click", async e => {
                     e.preventDefault();
                     await this.props.onSubmit(reversed[index], true);
@@ -69,7 +64,7 @@ export default class RecentSearches extends Component {
                 });
             });
         } else {
-            this.$recents.style.display = "none";
+            this.$element.style.display = "none";
         }
     }
 }

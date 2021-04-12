@@ -6,12 +6,9 @@ export default class ImageInfo extends Component {
         image: null
     };
 
-    $imageInfo;
-
     constructor($target) {
-        super($target);
-        this.$imageInfo = Component.createElement("div", { class: "ImageInfo Modal" });
-        $target.appendChild(this.$imageInfo);
+        super($target, Component.createElement("div", { class: "ImageInfo Modal" }));
+        $target.appendChild(this.$element);
         this.render();
 
         window.addEventListener("keydown", e => {
@@ -32,7 +29,7 @@ export default class ImageInfo extends Component {
         if (this.state.visible) {
             const { name, url, temperament, origin } = this.state.image;
 
-            this.$imageInfo.innerHTML = `
+            this.$element.innerHTML = `
                 <div class="overlay"></div>
                 <div class="content-wrapper">
                     <div class="title">
@@ -46,17 +43,17 @@ export default class ImageInfo extends Component {
                     </div>
                 </div>
             `;
-            this.$imageInfo.querySelectorAll(".overlay, .close").forEach($element => {
+            this.$element.querySelectorAll(".overlay, .close").forEach($element => {
                 $element.addEventListener("click", this.hide.bind(this));
             });
-            this.$imageInfo.style.display = "flex";
+            this.$element.style.display = "flex";
             setTimeout(() => {
-                this.$imageInfo.classList.add("show");
+                this.$element.classList.add("show");
             }, 200);
         } else {
-            this.$imageInfo.classList.remove("show");
+            this.$element.classList.remove("show");
             setTimeout(() => {
-                this.$imageInfo.style.display = "none";
+                this.$element.style.display = "none";
             }, 200);
         }
     }

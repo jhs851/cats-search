@@ -4,20 +4,20 @@ import SearchInputContainer from "./components/SearchInputContainer.js";
 import SearchResult from "./components/SearchResult.js";
 import ImageInfo from "./components/ImageInfo.js";
 import Loader from "./components/Loader.js";
-import API from "./core/API.js";
+import RandomCats from "./components/RandomCats.js";
 
 export default class App extends Component {
     header;
 
     searchInputContainer;
 
+    randomCats;
+
     searchResult;
 
     imageInfo;
 
     loader;
-
-    api;
 
     constructor($target) {
         super($target);
@@ -29,6 +29,10 @@ export default class App extends Component {
             onClickRandom: this.onClickRandom.bind(this)
         });
 
+        this.randomCats = new RandomCats($target, {
+            onClick: this.onClickCat.bind(this)
+        });
+
         this.searchResult = new SearchResult($target, {
             onClick: this.onClickCat.bind(this)
         });
@@ -36,26 +40,24 @@ export default class App extends Component {
         this.imageInfo = new ImageInfo($target);
 
         this.loader = new Loader($target);
-
-        this.api = new API(this.loader);
     }
 
     async onSearch(keyword) {
         const { data } = await this.api.fetchCats(keyword);
 
-        localStorage.setItem('lastKeyword', keyword);
+        localStorage.setItem("lastKeyword", keyword);
 
         this.searchResult.setState({
             searched: true,
             keyword,
             cats: data
         }, () => {
-            localStorage.setItem('lastResults', JSON.stringify(data));
+            localStorage.setItem("lastResults", JSON.stringify(data));
         });
     }
 
-    async onClickCat(image) {
-        const { data } = await this.api.fetchCat(image.id);
+    async onClickCat(id) {
+        const { data } = await this.api.fetchCat(id);
 
         this.imageInfo.setState({
             visible: true,
@@ -63,9 +65,7 @@ export default class App extends Component {
         });
     }
 
-    async onClickRandom() {
-        const { data } = await this.api.fetchRandomCats();
-
-        this.searchResult.setState({ cats: data });
+    onClickRandom() {
+        this.searchResult.setState({ cats: this.randomCats.state.randomCats });
     }
 }

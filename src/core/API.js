@@ -1,19 +1,19 @@
 export default class API {
     static ENDPOINT = "https://oivhcpn8r9.execute-api.ap-northeast-2.amazonaws.com/dev";
 
-    loader;
+    app;
 
-    constructor(loader) {
-        this.loader = loader;
+    constructor(app) {
+        this.app = app;
     }
 
     async fetch(path) {
         try {
-            this.loader.setVisible(true);
+            this.app.root.emit("loading");
 
             const response = await fetch(`${API.ENDPOINT}/${path}`);
 
-            this.loader.setVisible(false)
+            this.app.root.emit("loaded");
 
             return response.json();
         } catch (e) {

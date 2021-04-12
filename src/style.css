@@ -110,6 +110,46 @@ button {
   left: calc(100% - 18px);
 }
 
+.RandomCats .container {
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  width: 640px;
+}
+
+.RandomCats .wrapper {
+  display: flex;
+  transition: transform 0.3s;
+}
+
+.RandomCats .item {
+  background-color: #eee;
+  position: relative;
+  cursor: pointer;
+}
+
+.RandomCats img {
+  width: 640px;
+  object-fit: cover;
+}
+
+.RandomCats .navigation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.RandomCats .prev {
+  left: 20px;
+}
+
+.RandomCats .next {
+  right: 20px;
+}
+
 .SearchResult {
   margin-top: 10px;
   display: grid;
@@ -136,10 +176,31 @@ button {
 
 .SearchResult .item {
   background-color: #eee;
-  display: inline-block;
   margin: 0 0 1em;
   width: 100%;
   cursor: pointer;
+  position: relative;
+}
+
+.SearchResult .item .mask,
+.RandomCats .item .mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  word-break: keep-all;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.SearchResult .item:hover .mask,
+.RandomCats .item:hover .mask {
+  opacity: 1;
 }
 
 .SearchInputContainer .form-control {
@@ -151,6 +212,8 @@ button {
   flex: 1;
   font-size: 40px;
   padding: 10px 15px;
+  outline: 0;
+  border: 1px solid #eee;
 }
 
 .RandomButton {
@@ -233,6 +296,7 @@ button {
 .ImageInfo .title,
 .ImageInfo .description {
   padding: 5px;
+  color: #000;
 }
 
 .ImageInfo .content-wrapper {

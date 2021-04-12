@@ -1,12 +1,8 @@
 import Component from "../core/Component.js";
 
 export default class SearchInput extends Component {
-    $input;
-
     constructor($target, props) {
-        super($target, props);
-
-        this.$input = Component.createElement(
+        super($target, Component.createElement(
             "input",
             {
                 class: "SearchInput",
@@ -14,29 +10,30 @@ export default class SearchInput extends Component {
                 placeholder: "고양이를 검색해보세요.|",
                 autofocus: true
             },
-        );
-        this.$input.addEventListener("keyup", this.onKeyup.bind(this));
-        this.$input.addEventListener("click", this.onClick.bind(this));
+        ), props);
 
-        $target.appendChild(this.$input);
+        this.$element.addEventListener("keypress", this.onKeypress.bind(this));
+        this.$element.addEventListener("click", this.onClick.bind(this));
+
+        $target.appendChild(this.$element);
     }
 
-    async onKeyup(e) {
+    async onKeypress(e) {
         if (e.keyCode === 13) {
             await this.props.onSubmit(e.target.value, false);
         }
     }
 
     onClick() {
-        this.$input.value = '';
+        this.$element.value = "";
         this.props.toggleRecents();
     }
 
     setValue(value) {
-        this.$input.value = value;
+        this.$element.value = value;
     }
 
     focus() {
-        this.$input.focus();
+        this.$element.focus();
     }
 }

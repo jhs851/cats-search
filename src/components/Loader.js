@@ -5,15 +5,18 @@ export default class Loader extends Component {
         visible: false
     };
 
-    $loader;
-
     constructor($target) {
-        super($target);
-
-        this.$loader = Component.createElement("div", { class: "Loader Modal" });
-        this.$loader.innerHTML = "<span>불러오는 중...|</span>";
-        $target.appendChild(this.$loader);
+        super($target, Component.createElement("div", { class: "Loader Modal" }, "<span>불러오는 중...|</span>"));
+        $target.appendChild(this.$element);
         this.render();
+
+        this.root.on("loading", () => {
+            this.setVisible(true);
+        });
+
+        this.root.on("loaded", () => {
+            this.setVisible(false);
+        });
     }
 
     setVisible(visible) {
@@ -21,6 +24,6 @@ export default class Loader extends Component {
     }
 
     render() {
-        this.$loader.style.display = this.state.visible ? "flex" : "none";
+        this.$element.style.display = this.state.visible ? "flex" : "none";
     }
 }
